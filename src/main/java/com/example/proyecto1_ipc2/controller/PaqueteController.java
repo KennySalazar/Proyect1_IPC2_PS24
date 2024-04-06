@@ -110,10 +110,11 @@ public class PaqueteController extends HttpServlet {
                     "\n total = " + (((Paquete)paquete).getPeso()* user.getPrecioXLibra()+((Paquete)paquete).getCuota()) + " ") ;
             guardarPaquete((Paquete) paquete);
             System.out.println(((Paquete)paquete).getDetalle());
-            try { //despues de guardar el paquete, verfica si la cola de la ruta no esta llena
-                paqueteService.verificarEnvioPaquetesARuta(LoginController.conexion);
+            try {
                 //cuando el paquete entra al punto de control, verifica si la cola no esta llena
                 paqueteService.verificarSiElPaqueteYaLlegoAlPuntoControl(LoginController.conexion);
+                //despues de guardar el paquete, verfica si la cola de la ruta no esta llena
+                paqueteService.verificarEnvioPaquetesARuta(LoginController.conexion);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -146,7 +147,7 @@ public class PaqueteController extends HttpServlet {
 
         var paquete = jsonUtils.leerDeJSON(req, Paquete.class);
 
-        if(((Paquete)paquete).getEstado()==3){
+        if(((Paquete)paquete).getEstado()==4){
             horaSalidaPaqueteDelPuntoControl(((Paquete)paquete));
             paqueteService.actualizarPaquete((Paquete) paquete, LoginController.conexion, Integer.parseInt(paqueteID));
             Punto_Control puntoControl = null;
@@ -168,11 +169,11 @@ public class PaqueteController extends HttpServlet {
 
         }
         paqueteService.actualizarPaquete((Paquete) paquete, LoginController.conexion, Integer.parseInt(paqueteID));
-        try { //Verifica si el paquete ya esta en ruta, lo cambia al estado 1
-            paqueteService.verificarEnvioPaquetesARuta(LoginController.conexion);
+        try {
             //Verifica cuando el paquete ya entro al punto de control, lo cambia al estado 2
             paqueteService.verificarSiElPaqueteYaLlegoAlPuntoControl(LoginController.conexion);
-           // paqueteService.verificarSiElPaqueteYaFueEntregado(LoginController.conexion);
+            //Verifica si el paquete ya esta en ruta, lo cambia al estado 1
+            paqueteService.verificarEnvioPaquetesARuta(LoginController.conexion);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

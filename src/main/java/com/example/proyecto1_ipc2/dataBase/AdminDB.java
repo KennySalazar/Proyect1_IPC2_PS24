@@ -199,7 +199,7 @@ public class AdminDB {
 
     //METODO PARA VERIFICAR SI LA COLA DEL PC TIENE ESPACIO DISPONIBLE
     public void traerCantiadPaqueteEnColaPuntoControl(int idPuntoControl, Conexion conexion) {
-        String query = "SELECT COUNT(*) AS total_tuplas FROM paquete WHERE estado = 2 AND id_punto_control = ?;";
+        String query = "SELECT COUNT(*) AS total_tuplas FROM paquete WHERE estado = 3 AND id_punto_control = ?;";
         try {
             PreparedStatement stmt = conexion.getConnection().prepareStatement(query);
             stmt.setInt(1, idPuntoControl);

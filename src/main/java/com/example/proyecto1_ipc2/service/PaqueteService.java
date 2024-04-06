@@ -99,15 +99,15 @@ public class PaqueteService {
     }
 
     public void verificarSiElPaqueteYaLlegoAlPuntoControl(Conexion conexion) throws SQLException {
-        for(Paquete paquete: traerTodosPaquetesPorEstado(1)){
+        for(Paquete paquete: traerTodosPaquetesPorEstado(2)){
             int cantidadPaquetesEnColaPuntoControl = puntoControlService.devolverCantidadPaquetesEnPuntoControl(paquete.getIdPuntoControlPaquete(), conexion);
             Punto_Control puntoControl = puntoControlService.traerTodosPuntosControl(paquete.getIdPuntoControlPaquete()).get(0);
 
             if(cantidadPaquetesEnColaPuntoControl < puntoControl.getLimiteCola()){
-                paquete.setEstado(2);
+                paquete.setEstado(3);
                 horaEntradaPaqueteAPuntoControl(paquete); //METODO PARA AGREGAR LA HORA ACTUAL
                 actualizarPaquete(paquete, conexion, paquete.getCodigo());
-                System.out.println("SE HA ENVIADO EL PAQUETE A COLA DEL PUNTO DE CONTROL");
+                System.out.println("SE HA REGISTRADO EL PAQUETE A COLA DEL PUNTO DE CONTROL");
             } else{
                 System.out.println("PUNTO DE CONTROL LLENO, DEBE ESPERAR A QUE SE LIBERE O BUSCAR OTRO PUNTO CONTROL");
             }
