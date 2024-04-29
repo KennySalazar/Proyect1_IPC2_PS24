@@ -87,7 +87,7 @@ public class PaqueteService {
     public void verificarEnvioPaquetesARuta(Conexion conexion) throws SQLException {
         for(Paquete paquete: traerTodosPaquetesPorEstado(0)){
             int cantidadPaquetesEnColaRuta = rutaService.devolverCantidadPaquetesEnRuta(paquete.getIdRutaPaquete(), conexion);
-            Ruta ruta = rutaService.traerTodosRuta(paquete.getIdRutaPaquete()).get(0);
+            Ruta ruta = rutaService.traerRutas(paquete.getIdRutaPaquete()).get(0);
             if(cantidadPaquetesEnColaRuta < ruta.getLimiteCola()){
                 paquete.setEstado(1);
                 actualizarPaquete(paquete, conexion, paquete.getCodigo());

@@ -43,6 +43,7 @@ public class PaqueteController extends HttpServlet {
             }
             resp.setStatus(HttpServletResponse.SC_OK);
             jsonUtils.enviarComoJSON(resp, paquete);
+            return;
         }
 
         String [] splits = pathInfo.split("/");

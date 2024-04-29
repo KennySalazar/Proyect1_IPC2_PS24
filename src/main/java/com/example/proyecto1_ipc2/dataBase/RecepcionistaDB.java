@@ -81,7 +81,7 @@ public class RecepcionistaDB {
         }
     }
     public void mostrarDestinoPaquete(Conexion conexion, String destino) {
-        String query = "SELECT * FROM paquete WHERE destino = ? AND estado = 2";
+        String query = "SELECT * FROM paquete WHERE destino = ? AND estado = 3";
 
         try {
             PreparedStatement stmt = conexion.getConnection().prepareStatement(query);

@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ruta", urlPatterns = {"/ruta/*"})
@@ -21,19 +22,25 @@ public class RutaController extends HttpServlet {
     private JsonUtils jsonUtils = new JsonUtils<>();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String pathInfo = req.getPathInfo();
 
         if (pathInfo == null || pathInfo.equals("/")) {
 
-            List<Ruta> ruta = null;
+
             try {
-                ruta = rutaService.traerTodosRuta(-2);//trae todos los campos
+                List<Ruta> listaRuta=rutaService.traerRutasTodas();
+                if(listaRuta.size()==0){
+                    resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+                }
+                resp.setStatus(HttpServletResponse.SC_OK);
+                jsonUtils.enviarComoJSON(resp, listaRuta);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            resp.setStatus(HttpServletResponse.SC_OK);
-            jsonUtils.enviarComoJSON(resp, ruta);
+
+            return;
+
         }
 
         String [] splits = pathInfo.split("/");
@@ -42,7 +49,7 @@ public class RutaController extends HttpServlet {
         }
         int idRuta = Integer.parseInt(splits[1]);
         try {
-            List<Ruta> listaRuta=rutaService.traerTodosRuta(idRuta);
+            List<Ruta> listaRuta=rutaService.traerRutas(idRuta);
             if(listaRuta.size()== 0){
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             }

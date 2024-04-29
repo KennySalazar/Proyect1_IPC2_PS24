@@ -28,9 +28,20 @@ public class RutaService {
     public void actualizarRuta(Ruta ruta, Conexion conexion, int id){
         usuarioDB.actualizarRuta(conexion, ruta, id);
     }
-    public List<Ruta> traerTodosRuta(int id) throws SQLException {
+    public List<Ruta> traerRutas(int id) throws SQLException {
         List<Ruta> list=new ArrayList<>();
         usuarioDB.mostrarRuta(LoginController.conexion, id);
+        while(LoginController.conexion.resultSet.next()){
+            Ruta nuevo= new Ruta(LoginController.conexion.getResultSet().getInt(1),LoginController.conexion.getResultSet().getBoolean(2),LoginController.conexion.getResultSet().getBoolean(3),
+                    LoginController.conexion.getResultSet().getInt(4), LoginController.conexion.getResultSet().getInt(5), LoginController.conexion.resultSet.getInt(6));
+
+            list.add(nuevo);
+        }
+        return list;
+    }
+    public List<Ruta> traerRutasTodas() throws SQLException {
+        List<Ruta> list=new ArrayList<>();
+        usuarioDB.mostrarTodasRutas(LoginController.conexion);
         while(LoginController.conexion.resultSet.next()){
             Ruta nuevo= new Ruta(LoginController.conexion.getResultSet().getInt(1),LoginController.conexion.getResultSet().getBoolean(2),LoginController.conexion.getResultSet().getBoolean(3),
                     LoginController.conexion.getResultSet().getInt(4), LoginController.conexion.getResultSet().getInt(5), LoginController.conexion.resultSet.getInt(6));

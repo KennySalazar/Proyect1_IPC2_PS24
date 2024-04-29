@@ -61,6 +61,7 @@ public class UsuarioController extends HttpServlet {
             }
             resp.setStatus(HttpServletResponse.SC_OK);
             jsonUtils.enviarComoJSON(resp, user);
+            return;
         }
 
         String [] splits = pathInfo.split("/");

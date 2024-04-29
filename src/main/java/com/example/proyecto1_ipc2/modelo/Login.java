@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 
 public class Login {
-    private String rol;
+    private int rol;
     private String userName;
     private String password;
 }

@@ -183,6 +183,17 @@ public class AdminDB {
             System.out.println("Error al consultar la ruta:" + e);
         }
     }
+    public void mostrarTodasRutas(Conexion conexion) {
+        String query=query = "select * from ruta";
+
+
+        try {
+            PreparedStatement stmt = conexion.getConnection().prepareStatement(query);
+            conexion.setResultSet(stmt.executeQuery());
+        } catch (SQLException e) {
+            System.out.println("Error al consultar la ruta:" + e);
+        }
+    }
 
     public void eliminarRuta(int id, Conexion conexion) {
         String query = "delete from ruta WHERE id_ruta = ?;";

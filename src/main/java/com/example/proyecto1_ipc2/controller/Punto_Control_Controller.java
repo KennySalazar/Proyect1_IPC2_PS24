@@ -34,6 +34,7 @@ public class Punto_Control_Controller extends HttpServlet {
             }
             resp.setStatus(HttpServletResponse.SC_OK);
             jsonUtils.enviarComoJSON(resp, pcontrol);
+            return;
         }
 
         String [] splits = pathInfo.split("/");
